@@ -7,9 +7,15 @@
   crossorigin="anonymous"
 />
 
+<style>
+  [v-cloak] {
+    display: none;
+  }
+</style>
+
 <div id="app">
   <div class="container">
-    <form class="mt-5">
+    <form v-show="!submitted" class="mt-5">
       <div class="form-group">
         <label for="email">Email</label>
         <input
@@ -23,19 +29,22 @@
         Submit
       </button>
     </form>
+    <h2 v-show="submitted" v-cloak class="mt-5">Thanks for signing up!</h2>
   </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+
 <script>
-  new Vue({
+  var vm = new Vue({
     el: '#app',
     data: {
       email: 'mike@example.com',
+      submitted: false,
     },
     methods: {
       process: function () {
-        alert('Submitted ' + this.email);
+        this.submitted = true;
       },
     },
   });
