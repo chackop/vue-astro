@@ -17,6 +17,10 @@
   <div class="container">
     <div class="card mt-5">
       <h2 class="card-header">Near-Earth Objects</h2>
+      <div class="m-3" v-cloak v-if="numAsteroids > 0">
+        <p>showing {{numAsteroids}} items</p>
+        <p>{{closestObject}} has the shortest miss distance.</p>
+      </div>
       <table class="table">
         <thead class="thead-light">
           <th>#</th>
@@ -59,6 +63,34 @@
     el: '#app',
     data: {
       asteroids: [],
+    },
+    computed: {
+      numAsteroids: function () {
+        return this.asteroids.length;
+      },
+      closestObject: function () {
+        var neosHavingData = this.asteroids.filter(function (neo) {
+          return neo.close_approach_data.length > 0;
+        });
+        var simpleNeos =
+          neosHavingData &&
+          neosHavingData.map(function (neo) {
+            return {
+              name: neo.name,
+              miles: neo.close_approach_data[0].miss_distance.miles,
+            };
+          });
+        var sortedNeos =
+          simpleNeos &&
+          simpleNeos.sort(function (a, b) {
+            return a.miles - b.miles;
+          });
+        if (sortedNeos.length > 0) {
+          return sortedNeos[0].name;
+        } else {
+          return null;
+        }
+      },
     },
     created: function () {
       this.fetchAsteroids();
