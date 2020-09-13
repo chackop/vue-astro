@@ -34,7 +34,7 @@ Vue.component('asteroid-grid', {
       return 'N/A';
     },
     remove: function (index) {
-      this.asteroids.splice(index, 1);
+      this.$emit('remove', index);
     },
     getRowStyle: function (a) {
       if (a.close_approach_data.length == 0) {

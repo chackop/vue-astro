@@ -29,6 +29,9 @@
     created: function () {
       this.fetchAsteroids();
     },
+    remove: function (index) {
+      this.asteroids.splice(index, 1);
+    },
     methods: {
       fetchAsteroids: function () {
         var apiKey = '3326l6qhn8EcGO9h0LnUL6f5t7aitX53kNay73Hk';
